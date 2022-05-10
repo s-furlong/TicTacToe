@@ -75,6 +75,7 @@ PLATFORMS
 
 DEPENDENCIES
   guard-rspec
+  rspec
   rubocop
 
 BUNDLED WITH

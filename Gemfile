@@ -7,4 +7,6 @@ group :development do
 end
 
 gem 'rubocop'
+
+gem "rspec"
 # gem "rails"
