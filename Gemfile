@@ -8,5 +8,5 @@ end
 
 gem 'rubocop'
 
-gem "rspec"
+gem 'rspec'
 # gem "rails"
