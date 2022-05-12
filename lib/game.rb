@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 class Game
-  puts 'hello word'
+  puts 'Welcome to TTT'
 end
