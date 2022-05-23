@@ -1,24 +1,30 @@
 # frozen_string_literal: true
 
-# this is the baord for the tic tac toe game
-class Board
-  attr_accessor :value_board, :new_board
+require_relative 'board'
+require_relative 'player'
 
-  # rubocop:disable Metrics/AbcSize
+class Game
+  attr_accessor = :marker
   def initialize
-    # rubocop:enable Metrics/AbcSize
-    @value_board = %w[1 2 3 4 5 6 7 8 9]
-    # rubocop:disable Layout/LineLength
-    @new_board = " #{value_board[0]} | #{value_board[1]} | #{value_board[2]}\n___|___|___\n #{value_board[3]} | #{value_board[4]} | #{value_board[5]}\n___|___|___\n #{value_board[6]} | #{value_board[7]} | #{value_board[8]}"
-    # rubocop:enable Layout/LineLength
+    @board = Board.new
+    @player_1 = Player.new("X")
+    @player_2 = Player.new("O")
+    @game_over = 0
+    
+  end
+
+  def new_game
+    puts "Tic Tac Toe Human versus Human"
+    board = @board.value_board
+    index = @player_1.select_position
+    update_board(board, index)
+    return @board.value_board
+  end
+
+  def update_board(board, index)
+      player = @player_1.set_mark
+      @board.value_board[index] = player
+      
   end
 end
 
-# this allows the game to be launched
-class Game < Board
-  puts 'Welcome to TTT'
-  def new_game
-    start = Board.new
-    puts start.new_board
-  end
-end
