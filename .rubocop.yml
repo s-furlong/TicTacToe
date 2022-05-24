@@ -2,3 +2,6 @@ AllCops:
   NewCops: enable
   Exclude:
     - Guardfile
+    - lib/board.rb
+    - lib/game.rb
+    - lib/player.rb
