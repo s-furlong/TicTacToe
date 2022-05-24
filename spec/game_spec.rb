@@ -3,7 +3,6 @@
 require 'game'
 
 describe 'tic tac toe Game' do
-  game = Game.new
   board = Board.new
   it 'has a strings value corresponding to number on board' do
     ttt_board = %w[1 2 3 4 5 6 7 8 9]
@@ -15,5 +14,4 @@ describe 'tic tac toe Game' do
     allow($stdin).to receive(:gets).and_return(1)
     expect(test.new_game).to eq(1)
   end
-
 end
