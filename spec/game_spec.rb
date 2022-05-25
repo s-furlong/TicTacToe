@@ -9,11 +9,6 @@ describe 'tic tac toe Game' do
     game = Game.new
     allow($stdin).to receive(:gets).and_return('1')
     input = game.player_changes_board_on_turn
-    expect(input).to eq("X")
+    expect(input).to eq('X')
   end
-
-
-  
-
-
 end
