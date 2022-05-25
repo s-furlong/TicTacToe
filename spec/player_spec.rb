@@ -3,19 +3,25 @@
 require 'player'
 
 describe 'tic tac toe Player' do
-  it 'are input by user with correspnding TTT position and converts to index position' do
-    test = Player.new('X')
-    allow_any_instance_of(Player).to receive(:gets).and_return(1)
-    expect(test.select_position).to eq(0)
+  it 'is assinged a token to mark the board' do
+    @player = Player.new("X")
+    expected_token = @player.token
+    expect(expected_token).to eq("X")
   end
-  it 'are input by user with correspnding position and converts to index position' do
-    test = Player.new('X')
-    allow_any_instance_of(Player).to receive(:gets).and_return(4)
-    expect(test.select_position).to eq(3)
+
+  it 'can input to interact with the board' do
+    @player = Player.new("X")
+
+    tokens = ["X", "O"]
+
+    allow($stdin).to receive(:gets).and_return(tokens)
+    expect(@player.user_input).to eq(tokens)
+
+
+    
   end
-  it 'are input by user with correspnding TTT position and converts to index position' do
-    test = Player.new('X')
-    allow_any_instance_of(Player).to receive(:gets).and_return(9)
-    expect(test.select_position).to eq(8)
-  end
+
+  
 end
+
+
