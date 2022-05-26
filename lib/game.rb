@@ -3,21 +3,22 @@
 require_relative 'board'
 require_relative 'player'
 
-
 class Game
   attr_accessor = :token,
-  def initialize
-    @board = Board.new
-    @player_1 = Player.new('X')
-    @count = 0
-  end
+                  def initialize
+                    @board = Board.new
+                    @player_1 = Player.new('X')
+                    @finish = false
+                  end
 
-  def new_game
-    puts 'Tic Tac Toe Human versus Human'
+  def moves
+    puts 'Welcome to Tic Tac Toe'
     puts @board.display_board_to_console
-    player_changes_board_on_turn
-    puts @board.display_board_to_console
-      
+    while @finish == false
+      player_changes_board_on_turn
+      puts @board.display_board_to_console
+      end_game
+    end
   end
 
   def input_to_index(user_input)
@@ -31,10 +32,24 @@ class Game
   def player_changes_board_on_turn
     position = @player_1.user_input
     index = input_to_index(position)
-    post_player_position(index)
+    valid_move(index)
   end
 
+  def valid_move(index)
+    if @board.new_board[index] == 'X' || @board.new_board[index] == 'O'
+      puts 'already occupied, please make another selection'
+      player_changes_board_on_turn
+    else
+      post_player_position(index)
+    end
+  end
 
-
-
+  def end_game
+    if @board.new_board[8] == 'X'
+      @finish = true
+      puts 'game over'
+    else
+      @finish = false
+    end
+  end
 end
