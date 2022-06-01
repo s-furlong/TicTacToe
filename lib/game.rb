@@ -4,12 +4,13 @@ require_relative 'board'
 require_relative 'player'
 
 class Game
-  attr_accessor = :token,
-                  def initialize
-                    @board = Board.new
-                    @player_1 = Player.new('X')
-                    @finish = false
-                  end
+  attr_accessor :token
+  
+  def initialize
+    @board = Board.new
+    @player_1 = Player.new('X')
+    @finish = false
+  end
 
   def moves
     puts 'Welcome to Tic Tac Toe'
