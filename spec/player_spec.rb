@@ -9,7 +9,7 @@ describe 'tic tac toe Player' do
     expect(expected_token).to eq('X')
   end
 
-  it 'can input to interact with the board' do
+  it 'can input to interact with the board and is address player by token' do
     @player = Player.new('X')
 
     tokens = %w[X O]

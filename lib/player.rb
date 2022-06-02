@@ -8,7 +8,6 @@ class Player
   end
 
   def user_input
-    puts 'Select a value between 1 and 9'
     $stdin.gets
   end
 end
