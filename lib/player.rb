@@ -7,8 +7,7 @@ class Player
     @token = token
   end
 
-  def user_input
-    puts 'Select a value between 1 and 9'
+  def select_position
     $stdin.gets
   end
 end

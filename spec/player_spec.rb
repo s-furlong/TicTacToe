@@ -9,12 +9,12 @@ describe 'tic tac toe Player' do
     expect(expected_token).to eq('X')
   end
 
-  it 'can input to interact with the board' do
+  it 'can input to interact with the board and is address player by token' do
     @player = Player.new('X')
 
-    tokens = %w[X O]
+    select_position = 'X'
 
-    allow($stdin).to receive(:gets).and_return(tokens)
-    expect(@player.user_input).to eq(tokens)
+    allow($stdin).to receive(:gets).and_return(select_position)
+    expect(@player.select_position).to eq(select_position)
   end
 end
