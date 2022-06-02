@@ -24,8 +24,8 @@ class Game
     end
   end
 
-  def input_to_index(user_input)
-    user_input.to_i - 1
+  def input_to_index(select_position)
+    select_position.to_i - 1
   end
 
   def post_player_position(index)
@@ -34,7 +34,7 @@ class Game
 
   def player_changes_board_on_turn
     puts "***Player #{@current_player.token}*** Select a value between 1 and 9!"
-    position = @current_player.user_input
+    position = @current_player.select_position
     index = input_to_index(position)
     valid_move(index)
     switch_player
@@ -42,10 +42,10 @@ class Game
 
   def switch_player
     @current_player = if @current_player == @player_1
-                        @player_2
-                      else
-                        @player_1
-                      end
+      @player_2
+    else
+      @player_1
+    end
   end
 
   def valid_move(index)

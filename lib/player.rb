@@ -7,7 +7,7 @@ class Player
     @token = token
   end
 
-  def user_input
+  def select_position
     $stdin.gets
   end
 end
