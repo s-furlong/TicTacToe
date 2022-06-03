@@ -47,4 +47,29 @@ describe 'tic tac toe Game' do
     next_player = game.switch_player.token
     expect(next_player).to eq('O')
   end
+
+  it 'ends in a tie if all spots are taken and there is winning combo' do
+    game = Game.new
+    allow($stdin).to receive(:gets).and_return('1')
+    first_move_check_for_tie = game.tie_end?
+    expect(first_move_check_for_tie).to be false
+  end
+
+  it 'should return false when a player has made the first move' do
+    game = Game.new
+    allow($stdin).to receive(:gets).and_return('1')
+    expect(game.horizontal_win?).to eq(false)
+  end
+
+  it 'should return false when a player has made the first move' do
+    game = Game.new
+    allow($stdin).to receive(:gets).and_return('1')
+    expect(game.vertical_win?).to eq(false)
+  end
+
+  it 'should return false when a player has made the first move' do
+    game = Game.new
+    allow($stdin).to receive(:gets).and_return('1')
+    expect(game.diagonal_win?).to eq(false)
+  end
 end

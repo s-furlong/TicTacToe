@@ -42,10 +42,10 @@ class Game
 
   def switch_player
     @current_player = if @current_player == @player_1
-      @player_2
-    else
-      @player_1
-    end
+                        @player_2
+                      else
+                        @player_1
+                      end
   end
 
   def valid_move(index)
@@ -57,10 +57,48 @@ class Game
     end
   end
 
+  def horizontal_win?
+    top_row_win = (@board.new_board[0] != '1') && three_all_same_token(@board.new_board[0, 3])
+    middle_row_win = (@board.new_board[3] != '4') && three_all_same_token(@board.new_board[3, 3])
+    bottom_row_win = (@board.new_board[6] != '7') && three_all_same_token(@board.new_board[6, 3])
+    top_row_win || middle_row_win || bottom_row_win
+  end
+
+  def vertical_win?
+    left_vert_win = (@board.new_board[0] != '1') && three_all_same_token([@board.new_board[0], @board.new_board[3],
+                                                                          @board.new_board[6]])
+    mid_vert_win = (@board.new_board[1] != '2') && three_all_same_token([@board.new_board[1], @board.new_board[4],
+                                                                         @board.new_board[7]])
+    right_vert_win = (@board.new_board[2] != '3') && three_all_same_token([@board.new_board[2], @board.new_board[5],
+                                                                           @board.new_board[8]])
+    left_vert_win || mid_vert_win || right_vert_win
+  end
+
+  def diagonal_win?
+    top_left_to_bottom_win = (@board.new_board[0] != '1') && three_all_same_token([@board.new_board[0],
+                                                                                   @board.new_board[4], @board.new_board[8]])
+    top_right_to_bottom_win = (@board.new_board[2] != '3') && three_all_same_token([@board.new_board[2],
+                                                                                    @board.new_board[4], @board.new_board[6]])
+
+    top_left_to_bottom_win || top_right_to_bottom_win
+  end
+
+  def tie_end?
+    @board.new_board.all? { |spot| %w[X O].include?(spot) }
+  end
+
+  def three_all_same_token(win_array)
+    win_array.uniq.count <= 1
+  end
+
   def end_game
-    if @board.new_board[8] == 'X' || @board.new_board[8] == 'O'
+    if horizontal_win? || vertical_win? || diagonal_win?
+      switch_player
       @finish = true
-      puts 'game over'
+      puts "CONGRATS!!, ***PLAYER #{@current_player.token}**** your a winner!!!"
+    elsif tie_end?
+      @finish = true
+      puts 'game over, this game is a draw'
     else
       @finish = false
     end
