@@ -107,7 +107,7 @@ class Game
     if horizontal_win || vertical_win || diagonal_win
       switch_player
       @finish = true
-      puts "WOWOWOW, #{@current_player.token} your a winner baby shantay you stay!!!"
+      puts "CONGRATS!!, ***PLAYER #{@current_player.token}**** your a winner!!!"
     elsif tie_end
       @finish = true
       puts 'game over, this game is a draw'
