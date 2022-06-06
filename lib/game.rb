@@ -52,6 +52,7 @@ class Game
     if @board.new_board[index] == 'X' || @board.new_board[index] == 'O'
       puts 'already occupied, please make another selection'
       player_changes_board_on_turn
+      switch_player
     else
       post_player_position(index)
     end
