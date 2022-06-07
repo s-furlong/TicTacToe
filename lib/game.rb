@@ -12,16 +12,32 @@ class Game
     @player_2 = Player.new('O')
     @finish = false
     @current_player = @player_1
+    @validator = Validator.new
   end
 
   def moves
     puts 'Welcome to Tic Tac Toe'
     puts @board.display_board_to_console
     while @finish == false
-      player_changes_board_on_turn
-      puts @board.display_board_to_console
-      end_game
+      valid_move = false
+      while !valid_move
+        puts @board.display_board_to_console
+        ask_player_for_selection
+        # player_index_selection = player_changes_board_on_turn
+        player_selection = player.make_selection
+        valid_move = @validator.selection_is_valid?(@board, player_index_selection)
+        if !valid_move
+          puts "Sorry, invalid move"
+        end
+      end
+      game_won = check_if_game_won(@board)
+      if !game_won
+        switch_player
+      else
+        @finish = true
+      end
     end
+    # end_game
   end
 
   def input_to_index(select_position)
@@ -35,8 +51,13 @@ class Game
   def player_changes_board_on_turn
     puts "***Player #{@current_player.token}*** Select a value between 1 and 9!"
     position = @current_player.select_position
-    index = input_to_index(position)
-    valid_move(index)
+    input_to_index(position)
+    # index = input_to_index(position)
+    # valid_move(index)
+  end
+
+  def valid_move?(index)
+    @board.new_board[index] == 'X' || @board.new_board[index] == 'O'
   end
 
   def valid_move(index)
