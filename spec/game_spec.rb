@@ -16,7 +16,7 @@ describe 'tic tac toe Game' do
     game = Game.new
     allow($stdin).to receive(:gets).and_return('1')
     next_player = game.valid_move(1)
-    expect(next_player).to eq('X')
+    expect(next_player.token).to eq('O')
   end
 
   it 'will validate the move as true or false' do

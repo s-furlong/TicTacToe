@@ -39,8 +39,6 @@ class Game
     valid_move(index)
   end
 
-
-
   def valid_move(index)
     if @board.new_board[index] == 'X' || @board.new_board[index] == 'O'
       puts 'already occupied, please make another selection'
