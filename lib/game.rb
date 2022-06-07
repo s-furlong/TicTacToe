@@ -37,7 +37,18 @@ class Game
     position = @current_player.select_position
     index = input_to_index(position)
     valid_move(index)
-    switch_player
+  end
+
+
+
+  def valid_move(index)
+    if @board.new_board[index] == 'X' || @board.new_board[index] == 'O'
+      puts 'already occupied, please make another selection'
+      player_changes_board_on_turn
+    else
+      post_player_position(index)
+      switch_player
+    end
   end
 
   def switch_player
@@ -46,16 +57,6 @@ class Game
                       else
                         @player_1
                       end
-  end
-
-  def valid_move(index)
-    if @board.new_board[index] == 'X' || @board.new_board[index] == 'O'
-      puts 'already occupied, please make another selection'
-      player_changes_board_on_turn
-      switch_player
-    else
-      post_player_position(index)
-    end
   end
 
   def horizontal_win?
