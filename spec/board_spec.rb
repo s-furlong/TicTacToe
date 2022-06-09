@@ -3,8 +3,6 @@
 require 'board'
 
 describe 'the tic tac toe board' do
-  context 'when game begins'
-
   it 'has a structure to store space values ont the board' do
     @board = Board.new
 
@@ -28,5 +26,13 @@ describe 'the tic tac toe board' do
     board_display = @board.display_board_to_console
 
     expect(board_display).to eq("\n 1 | 2 | 3\n---+---+---\n 4 | 5 | 6\n---+---+---\n 7 | 8 | 9\n\n")
+  end
+
+  it 'should record the postion on the selected by the player' do
+    @board = Board.new
+
+    marked = @board.mark(2, 'X')
+
+    expect(marked).to eq('X')
   end
 end
