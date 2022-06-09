@@ -2,6 +2,7 @@
 
 require_relative 'board'
 require_relative 'player'
+require_relative 'validator'
 
 class Game
   attr_accessor :token, :current_player
@@ -12,13 +13,24 @@ class Game
     @player_2 = Player.new('O')
     @finish = false
     @current_player = @player_1
+    @validator = Validator.new(@board)
   end
 
-  def moves
+  def launch_game
     puts 'Welcome to Tic Tac Toe'
     puts @board.display_board_to_console
     while @finish == false
-      player_changes_board_on_turn
+      valid_move = false
+      while valid_move == false
+        player_selection_index = ask_player_for_selection
+        valid_move = @validator.selection_is_valid?(player_selection_index)
+        if valid_move
+          post_player_position(player_selection_index)
+          switch_player
+        else
+          puts 'Invalid Selection, Please selection 1 to 9'
+        end
+      end
       puts @board.display_board_to_console
       end_game
     end
@@ -29,24 +41,13 @@ class Game
   end
 
   def post_player_position(index)
-    @board.new_board[index] = @current_player.token
+    @board.mark(index, @current_player.token)
   end
 
-  def player_changes_board_on_turn
+  def ask_player_for_selection
     puts "***Player #{@current_player.token}*** Select a value between 1 and 9!"
     position = @current_player.select_position
     index = input_to_index(position)
-    valid_move(index)
-  end
-
-  def valid_move(index)
-    if @board.new_board[index] == 'X' || @board.new_board[index] == 'O'
-      puts 'already occupied, please make another selection'
-      player_changes_board_on_turn
-    else
-      post_player_position(index)
-      switch_player
-    end
   end
 
   def switch_player
@@ -104,3 +105,4 @@ class Game
     end
   end
 end
+

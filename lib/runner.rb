@@ -2,5 +2,5 @@
 
 require_relative 'game'
 
-runner = Game.new
-runner.moves
+game = Game.new
+game.launch_game

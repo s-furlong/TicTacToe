@@ -5,6 +5,8 @@ AllCops:
     - lib/board.rb
     - lib/game.rb
     - lib/player.rb
+    - lib/validator.rb
 Metrics/BlockLength:
   Exclude:
     - spec/game_spec.rb
+    - spec/validator_spec.rb
