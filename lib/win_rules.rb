@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Rules
+class WinRules
   attr_reader :board
 
   def initialize(board)

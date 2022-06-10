@@ -3,7 +3,7 @@
 require_relative 'board'
 require_relative 'player'
 require_relative 'validator'
-require_relative 'rules'
+require_relative 'win_rules'
 
 class Game
   attr_accessor :token, :current_player
@@ -15,7 +15,7 @@ class Game
     @finish = false
     @current_player = @player_1
     @validator = Validator.new(@board)
-    @rules = Rules.new(@board)
+    @rules = WinRules.new(@board)
   end
 
   def launch_game

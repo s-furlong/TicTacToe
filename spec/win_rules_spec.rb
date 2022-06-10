@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rules'
+require 'win_rules'
 require 'board'
 
 describe 'tic tac toe rules' do
@@ -10,7 +10,7 @@ describe 'tic tac toe rules' do
       board.mark(0, 'X')
       board.mark(1, 'X')
       board.mark(2, 'X')
-      rules = Rules.new(board)
+      rules = WinRules.new(board)
 
       horizontal = rules.horizontal_win?
 
@@ -22,7 +22,7 @@ describe 'tic tac toe rules' do
       board.mark(3, 'X')
       board.mark(4, 'X')
       board.mark(5, 'X')
-      rules = Rules.new(board)
+      rules = WinRules.new(board)
 
       horizontal = rules.horizontal_win?
 
@@ -34,7 +34,7 @@ describe 'tic tac toe rules' do
       board.mark(6, 'X')
       board.mark(7, 'X')
       board.mark(8, 'X')
-      rules = Rules.new(board)
+      rules = WinRules.new(board)
 
       horizontal = rules.horizontal_win?
 
@@ -46,7 +46,7 @@ describe 'tic tac toe rules' do
       board.mark(0, 'X')
       board.mark(3, 'X')
       board.mark(6, 'X')
-      rules = Rules.new(board)
+      rules = WinRules.new(board)
 
       vertical = rules.vertical_win?
 
@@ -58,7 +58,7 @@ describe 'tic tac toe rules' do
       board.mark(1, 'X')
       board.mark(7, 'X')
       board.mark(4, 'X')
-      rules = Rules.new(board)
+      rules = WinRules.new(board)
 
       vertical = rules.vertical_win?
 
@@ -70,7 +70,7 @@ describe 'tic tac toe rules' do
       board.mark(2, 'X')
       board.mark(5, 'X')
       board.mark(8, 'X')
-      rules = Rules.new(board)
+      rules = WinRules.new(board)
 
       vertical = rules.vertical_win?
 
@@ -82,7 +82,7 @@ describe 'tic tac toe rules' do
       board.mark(0, 'X')
       board.mark(4, 'X')
       board.mark(8, 'X')
-      rules = Rules.new(board)
+      rules = WinRules.new(board)
 
       diagonal = rules.diagonal_win?
 
@@ -94,7 +94,7 @@ describe 'tic tac toe rules' do
       board.mark(2, 'X')
       board.mark(4, 'X')
       board.mark(6, 'X')
-      rules = Rules.new(board)
+      rules = WinRules.new(board)
 
       diagonal = rules.diagonal_win?
 
@@ -106,7 +106,7 @@ describe 'tic tac toe rules' do
       board.mark(6, 'X')
       board.mark(7, 'X')
       board.mark(8, 'X')
-      rules = Rules.new(board)
+      rules = WinRules.new(board)
 
       win = rules.win?
 
@@ -118,7 +118,7 @@ describe 'tic tac toe rules' do
       board.mark(0, 'X')
       board.mark(3, 'X')
       board.mark(6, 'X')
-      rules = Rules.new(board)
+      rules = WinRules.new(board)
 
       win = rules.win?
 
@@ -128,19 +128,28 @@ describe 'tic tac toe rules' do
     it 'should output true and game ends in a tie' do
       board = Board.new
       board.mark(0, 'X')
-      board.mark(1, 'X')
-      board.mark(2, 'X')
+      board.mark(1, 'O')
+      board.mark(2, 'O')
       board.mark(3, 'X')
       board.mark(4, 'X')
-      board.mark(5, 'X`')
+      board.mark(5, 'O')
       board.mark(6, 'X')
       board.mark(7, 'X')
       board.mark(8, 'X')
-      rules = Rules.new(board)
+      rules = WinRules.new(board)
 
-      win = rules.win?
+      win = rules.tie_end?
 
       expect(win).to eq(true)
+    end
+
+    it 'will output true if board has a combo of all three tokens for one player' do
+      board = Board.new
+      three_match = WinRules.new(board)
+      
+      match = three_match.three_all_same_token(["X", "X", "X"])
+
+      expect(match).to eq(true)
     end
   end
 end
