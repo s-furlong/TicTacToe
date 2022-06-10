@@ -4,7 +4,6 @@ require 'game'
 
 describe 'tic tac toe Game' do
   context 'while player adds token to board' do
-
     it 'allows player to select position and switches to the next player' do
       game = Game.new
       allow($stdin).to receive(:gets).and_return('1')

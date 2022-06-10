@@ -146,8 +146,8 @@ describe 'tic tac toe rules' do
     it 'will output true if board has a combo of all three tokens for one player' do
       board = Board.new
       three_match = WinRules.new(board)
-      
-      match = three_match.three_all_same_token(["X", "X", "X"])
+
+      match = three_match.three_all_same_token(%w[X X X])
 
       expect(match).to eq(true)
     end
