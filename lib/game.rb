@@ -4,6 +4,7 @@ require_relative 'board'
 require_relative 'player'
 require_relative 'validator'
 require_relative 'win_rules'
+require_relative 'console'
 
 class Game
   attr_accessor :token, :current_player
@@ -16,24 +17,25 @@ class Game
     @current_player = @player_1
     @validator = Validator.new(@board)
     @rules = WinRules.new(@board)
+    @console = Console.new
   end
 
   def launch_game
-    puts 'Welcome to Tic Tac Toe'
-    puts @board.display_board_to_console
-    while @finish == false
+    terminal(@console.welcome)
+    terminal(@console.game_board(@board))
+    until @finish
       valid_move = false
-      while valid_move == false
+      until valid_move
         player_selection_index = ask_player_for_selection
         valid_move = @validator.selection_is_valid?(player_selection_index)
         if valid_move
           post_player_position(player_selection_index)
           switch_player
         else
-          puts '**INVALID** Please select a number between 1 and 9.'
+          terminal(@console.invalid_move)
         end
       end
-      puts @board.display_board_to_console
+      terminal(@console.game_board(@board))
       end_game
     end
   end
@@ -47,7 +49,7 @@ class Game
   end
 
   def ask_player_for_selection
-    puts "***Player #{@current_player.token}*** Select a value between 1 and 9!"
+    terminal(@console.input_selection(@current_player.token))
     position = @current_player.select_position
     index = input_to_index(position)
   end
@@ -64,12 +66,18 @@ class Game
     if @rules.win?
       switch_player
       @finish = true
-      puts "CONGRATS!!, ***PLAYER #{@current_player.token}*** is the WINNER!!!"
+      terminal(@console.win_game(@current_player.token))
     elsif @rules.tie_end?
       @finish = true
-      puts 'game over, this game is a draw'
+      terminal(@console.tie_game)
     else
       @finish = false
     end
+  end
+
+  private
+
+  def terminal(message)
+    puts @console.output(message)
   end
 end

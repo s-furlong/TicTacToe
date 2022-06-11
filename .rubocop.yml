@@ -7,8 +7,10 @@ AllCops:
     - lib/player.rb
     - lib/validator.rb
     - lib/win_rules.rb
+    - lib/console.rb
 Metrics/BlockLength:
   Exclude:
     - spec/game_spec.rb
     - spec/validator_spec.rb
     - spec/win_rules_spec.rb
+    - spec/console_spec.rb
