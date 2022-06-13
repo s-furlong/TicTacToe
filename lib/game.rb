@@ -3,6 +3,8 @@
 require_relative 'board'
 require_relative 'player'
 require_relative 'validator'
+require_relative 'win_rules'
+require_relative 'console'
 
 class Game
   attr_accessor :token, :current_player
@@ -14,24 +16,26 @@ class Game
     @finish = false
     @current_player = @player_1
     @validator = Validator.new(@board)
+    @rules = WinRules.new(@board)
+    @console = Console.new
   end
 
   def launch_game
-    puts 'Welcome to Tic Tac Toe'
-    puts @board.display_board_to_console
-    while @finish == false
+    terminal(@console.welcome)
+    terminal(@console.game_board(@board))
+    until @finish
       valid_move = false
-      while valid_move == false
+      until valid_move
         player_selection_index = ask_player_for_selection
         valid_move = @validator.selection_is_valid?(player_selection_index)
         if valid_move
           post_player_position(player_selection_index)
           switch_player
         else
-          puts 'Invalid Selection, Please selection 1 to 9'
+          terminal(@console.invalid_move)
         end
       end
-      puts @board.display_board_to_console
+      terminal(@console.game_board(@board))
       end_game
     end
   end
@@ -45,7 +49,7 @@ class Game
   end
 
   def ask_player_for_selection
-    puts "***Player #{@current_player.token}*** Select a value between 1 and 9!"
+    terminal(@console.input_selection(@current_player.token))
     position = @current_player.select_position
     index = input_to_index(position)
   end
@@ -58,51 +62,22 @@ class Game
                       end
   end
 
-  def horizontal_win?
-    top_row_win = (@board.new_board[0] != '1') && three_all_same_token(@board.new_board[0, 3])
-    middle_row_win = (@board.new_board[3] != '4') && three_all_same_token(@board.new_board[3, 3])
-    bottom_row_win = (@board.new_board[6] != '7') && three_all_same_token(@board.new_board[6, 3])
-    top_row_win || middle_row_win || bottom_row_win
-  end
-
-  def vertical_win?
-    left_vert_win = (@board.new_board[0] != '1') && three_all_same_token([@board.new_board[0], @board.new_board[3],
-                                                                          @board.new_board[6]])
-    mid_vert_win = (@board.new_board[1] != '2') && three_all_same_token([@board.new_board[1], @board.new_board[4],
-                                                                         @board.new_board[7]])
-    right_vert_win = (@board.new_board[2] != '3') && three_all_same_token([@board.new_board[2], @board.new_board[5],
-                                                                           @board.new_board[8]])
-    left_vert_win || mid_vert_win || right_vert_win
-  end
-
-  def diagonal_win?
-    top_left_to_bottom_win = (@board.new_board[0] != '1') && three_all_same_token([@board.new_board[0],
-                                                                                   @board.new_board[4], @board.new_board[8]])
-    top_right_to_bottom_win = (@board.new_board[2] != '3') && three_all_same_token([@board.new_board[2],
-                                                                                    @board.new_board[4], @board.new_board[6]])
-
-    top_left_to_bottom_win || top_right_to_bottom_win
-  end
-
-  def tie_end?
-    @board.new_board.all? { |spot| %w[X O].include?(spot) }
-  end
-
-  def three_all_same_token(win_array)
-    win_array.uniq.count <= 1
-  end
-
   def end_game
-    if horizontal_win? || vertical_win? || diagonal_win?
+    if @rules.win?
       switch_player
       @finish = true
-      puts "CONGRATS!!, ***PLAYER #{@current_player.token}**** your a winner!!!"
-    elsif tie_end?
+      terminal(@console.win_game(@current_player.token))
+    elsif @rules.tie_end?
       @finish = true
-      puts 'game over, this game is a draw'
+      terminal(@console.tie_game)
     else
       @finish = false
     end
   end
-end
 
+  private
+
+  def terminal(message)
+    puts @console.output(message)
+  end
+end
